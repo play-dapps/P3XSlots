@@ -236,6 +236,22 @@ async function populateField() {
 	} else {
 		el('#withdrawfundsbutton').hidden= true;
 	}
+	
+	const totalTokenBalance = await promisify(cb => hubInstance.totalSupply(cb));
+	
+	el('#tokenstotal').innerHTML = web3.fromWei(totalTokenBalance).toFixed(2);
+	
+	const shareholder = await promisify(cb => hubInstance.shareholders(accounts[0], cb));
+	
+	el('#mytokens').innerHTML = web3.fromWei(shareholder[0]).toFixed(2) + ' P3X';
+	
+	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(2) + ' ETH';
+	
+	/* if(player[1] > 0) {
+		el('#withdrawdividendsbutton').hidden= false;
+	} else {
+		el('#withdrawdividendsbutton').hidden= true;
+	} */
 }
 
 async function getLatestWins() {
