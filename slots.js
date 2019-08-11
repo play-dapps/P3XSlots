@@ -225,13 +225,13 @@ async function populateField() {
 		el('#withdraw').hidden = true;
 	}
 	
-	el('#contribution').innerHTML = web3.fromWei(player[2]).toFixed(2) + ' ETH';
+	el('#contribution').innerHTML = web3.fromWei(player[1]).toFixed(2) + ' ETH';
 	
 	const totalFundingBalances = await promisify(cb => hubInstance.totalFundingBalances(cb));
 	
 	el('#fundedtotal').innerHTML = web3.fromWei(totalFundingBalances).toFixed(2) + ' ETH';
 	
-	if(player[2] > 0) {
+	if(player[1] > 0) {
 		el('#withdrawfundsbutton').hidden= false;
 	} else {
 		el('#withdrawfundsbutton').hidden= true;
