@@ -244,11 +244,7 @@ async function getLatestWins() {
 		const theEvent = events[events.length - 1 - i].args;
 		const playerAddress = theEvent.player;
 		const player = await promisify(cb => hubInstance.players(playerAddress, cb));
-		if(player[1] != "") {
-				el('#w' + i).innerHTML = player[1];
-		} else {
-				el('#w' + i).innerHTML = playerAddress.substring(0, 10);
-		}
+		el('#w' + i).innerHTML = playerAddress.substring(0, 10);
 		el('#a' + i).innerHTML = web3.fromWei(theEvent.amount).toFixed(2) + ' P3X';
 		
 		el('#w' + i + 'r1').className = "payoutInner slot" + theEvent.reel1 + "_s";
