@@ -250,7 +250,7 @@ async function populateField() {
 	
 	el('#mytokens').innerHTML = web3.fromWei(shareholder[0]).toFixed(2);
 	
-	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(2) + ' ETH';
+	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(4) + ' ETH';
 	
 	if(player[1] > 0) {
 		el('#withdrawdividendsbutton').hidden= false;
