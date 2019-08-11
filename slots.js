@@ -13,7 +13,7 @@ window.addEventListener('load', async () => {
 			//	setup('0x399529C2a759dE7D84Fa8FAa4642cE7D5CA911e1', '0x349fD87eAf9FBA5d24e16bbB1d211B9203157A63', '000000000000000000000000349fd87eaf9fba5d24e16bbb1d211b9203157a6300000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000020');
 			//	break;
 			case "3":
-				setup('0xb5e6AFC25E50d7f03c1AD8026874fe47E04A5714', '0xb3440f9C7AD5d4422b4c8835d121dc9667c21713', '0xCD45A142d109BBC8b22Ff6028614027D1dB4E32F', '000000000000000000000000b3440f9C7AD5d4422b4c8835d121dc9667c2171300000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000020');
+				setup('0xdf70dd22E220C7384BF4B8B8223052A78a4A2445', '0xA38BE80Abfad3FA6Ed1351535Af885933878D967', '0xCD45A142d109BBC8b22Ff6028614027D1dB4E32F', '000000000000000000000000A38BE80Abfad3FA6Ed1351535Af885933878D96700000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000020');
 				break;																																																																							   											
 			default:																																																																							   										
 				alert('Switch to Ropsten to play Slots!');
@@ -237,9 +237,9 @@ async function populateField() {
 	el('#fundedtotal').innerHTML = web3.fromWei(totalFundingBalances).toFixed(2) + ' P3X';
 	
 	if(player[1] > 0) {
-		el('#withdrawfundsbutton').hidden= false;
+		el('#withdrawfundsbutton').hidden = false;
 	} else {
-		el('#withdrawfundsbutton').hidden= true;
+		el('#withdrawfundsbutton').hidden = true;
 	}
 	
 	const totalTokenBalance = await promisify(cb => hubInstance.totalSupply(cb));
@@ -253,9 +253,9 @@ async function populateField() {
 	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(4) + ' ETH';
 	
 	if(shareholder[1] > 0) {
-		el('#withdrawdividendsbutton').hidden= false;
+		el('#withdrawdividendsbutton').hidden = false;
 	} else {
-		el('#withdrawdividendsbutton').hidden= true;
+		el('#withdrawdividendsbutton').hidden = true;
 	}
 }
 
