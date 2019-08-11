@@ -252,7 +252,7 @@ async function populateField() {
 	
 	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(4) + ' ETH';
 	
-	if(player[1] > 0) {
+	if(shareholder[1] > 0) {
 		el('#withdrawdividendsbutton').hidden= false;
 	} else {
 		el('#withdrawdividendsbutton').hidden= true;
