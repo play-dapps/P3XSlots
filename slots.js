@@ -181,7 +181,7 @@ function getTotalAmount() {
 }
 
 function getBytes() {
-	return bytes + (el('#one').checked ? bytesOne : bytesDotFive;
+	return bytes + el('#one').checked ? bytesOne : bytesDotFive;
 }
 
 function calcWin() {
