@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="Slots Game with P3X integration">
+      <meta name="author" content="dav">
+      <link rel="icon" type="image/webp" href="../Slots/icon.webp">
+	  
+	  <title>P3XSlots</title>
+	  <link href="/styles/slotmachine.min.css" rel="stylesheet">
+	  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	  <script src="/slotmachine.min.js"></script>
+	  <script src="/slots.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+  </head>
+   <body id="casino" style="background-color: #ee4e73;">
+      <div class="container-fluid">
+	<div class="row" style="text-align:center">
+	 <div class="col-12" style="color:white;">
+			<h1>P3XSlots</h1>
+		</div>
+	</div>
+	<div class="row" style="text-align:center">
+	 <div class="col-12" style="color:white;">
+		</div>
+	</div>
+	<div class="row" style="text-align:center; margin-left:200px;margin-right:200px;">
+		<div class="col-12" style="background-color:#f09696;padding-top:15px">
+          <div id="casino1" class="slotMachine">
+            <div class="slot slot0"></div>
+            <div class="slot slot1"></div>
+            <div class="slot slot2"></div>
+            <div class="slot slot3"></div>
+            <div class="slot slot4"></div>
+          </div>
+
+          <div id="casino2" class="slotMachine">
+           <div class="slot slot0"></div>
+            <div class="slot slot1"></div>
+            <div class="slot slot2"></div>
+            <div class="slot slot3"></div>
+            <div class="slot slot4"></div>
+          </div>
+
+          <div id="casino3" class="slotMachine">
+           <div class="slot slot0"></div>
+            <div class="slot slot1"></div>
+            <div class="slot slot2"></div>
+            <div class="slot slot3"></div>
+            <div class="slot slot4"></div>
+          </div>
+		</div>
+	  </div>
+	  <div class="row" style="color:white;text-align:center;background-color:#f09696; margin:50px">
+		<div class="col-3">
+		</div>
+		<div class="col-2" style="padding:10px">
+			<p>Player Wallet:</p>
+			<p id="playerWallet">---</p>
+		</div>
+		<div class="col-2" style="padding:10px">
+			<h2>S P I N !</h2>
+			<div class="btn-group" role="group" aria-label="Basic example">
+			<button id="casinoShuffle" onclick="start()" type="button" class="btn btn-danger btn-lg">Wallet</button>
+			<button id="casinoShuffle" onclick="start()" type="button" class="btn btn-danger btn-lg">Bank</button>
+			</div>
+		</div>
+		<div class="col-2" style="padding:10px">
+			<p>Player Bank:</p>
+			<p id="playerBank">---</p>
+		</div>
+		<div class="col-3">
+		</div>
+	  </div>
+	  <div class="row" style="color:white;text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-6">
+			<h2>Overview</h3>
+		 </div>
+		 <div class="col-lg-6">
+			<h2>Last Wins</h3>
+		 </div>
+	  </div>
+	  <div class="row" style="color:white;text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-3">
+			<h3>Combination</h3>
+		 </div>
+		 <div class="col-lg-1" style="color:white;">
+		 </div>
+		 <div class="col-lg-1">
+			<h3>Multiplier</h3>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		 <div class="col-lg-3">
+			<h3>Result</h3>
+		 </div>
+		 <div class="col-lg-3">
+			<h3>Player</h3>
+		 </div>
+	  </div>
+	  <div class="row" style="text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner slot0_s"></div>
+			<div class="payoutInner slot0_s"></div>
+			<div class="payoutInner slot0_s"></div>
+		    </div>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		    <p>x20</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-3" style="color:white">
+			<p>0x000...00000</p>
+		 </div>
+	  </div>
+	  <div class="row" style="text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner slot1_s"></div>
+			<div class="payoutInner slot1_s"></div>
+			<div class="payoutInner slot1_s"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-1" style="color:white;">
+		 </div>
+		 <div class="col-lg-1" style="color:white;">
+		    <p>x7</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-3" style="color:white">
+			<p>0x000...00000</p>
+		 </div>
+	  </div>
+	  <div class="row" style="text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner slot2_s"></div>
+			<div class="payoutInner slot2_s"></div>
+			<div class="payoutInner slot2_s"></div>
+		    </div>
+		 </div>
+		    <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		     <p>x7</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-3" style="color:white">
+			<p>0x000...00000</p>
+		 </div>
+	  </div>
+	  <div class="row" style="text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner slot3_s"></div>
+			<div class="payoutInner slot3_s"></div>
+			<div class="payoutInner slot3_s"></div>
+		    </div>
+		 </div>
+		   <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		    <p>x7</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-3" style="color:white">
+			<p>0x000...00000</p>
+		 </div>
+	  </div>
+	   <div class="row" style="text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner slot4_s"></div>
+			<div class="payoutInner slot4_s"></div>
+			<div class="payoutInner slot4_s"></div>
+		    </div>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+			<p>x7</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-3" style="color:white">
+			<p>0x000...00000</p>
+		 </div>
+	  </div>
+	  <div class="row" style="text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px">
+		 <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner slot0_s"></div>
+			<div class="payoutInner slot0_s"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		  <p>(any order)</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		    <p>x2</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-3" style="color:white">
+			<p>0x000...00000</p>
+		 </div>
+	  </div>
+	  <div class="row" style="text-align:center;background-color:#f09696; margin-left:50px;margin-right:50px;margin-bottom:15px">
+		 <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner slot0_s"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		    <p>(any order)</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		    <p>x1</p>
+		 </div>
+		  <div class="col-lg-1" style="color:white;">
+		 </div>
+		  <div class="col-lg-3">
+			<div class="payoutOuter">
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+			<div class="payoutInner blank"></div>
+		    </div>
+		 </div>
+		 <div class="col-lg-3" style="color:white">
+			<p>0x000...00000</p>
+		 </div>
+	  </div>
+</div>
+<script>
+const casino1 = document.querySelector('#casino1');
+const casino2 = document.querySelector('#casino2');
+const casino3 = document.querySelector('#casino3');
+const mCasino1 = new SlotMachine(casino1, {
+  active: 0,
+  delay: 1000,
+   randomize() {
+    return result1;
+  }
+});
+const mCasino2 = new SlotMachine(casino2, {
+  active: 1,
+  delay: 1000,
+   randomize() {
+    return result2;
+  }
+});
+const mCasino3 = new SlotMachine(casino3, {
+  active: 2,
+  delay: 1000,
+   randomize() {
+    return result3;
+  }
+});
+
+function startSpin() {
+	mCasino1.shuffle(99999);
+	mCasino2.shuffle(99999);
+	mCasino3.shuffle(99999);
+}
+
+</script>
+ </body>
+
+</html>
