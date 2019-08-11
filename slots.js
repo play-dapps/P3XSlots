@@ -13,7 +13,7 @@ window.addEventListener('load', async () => {
 			//	setup('0x399529C2a759dE7D84Fa8FAa4642cE7D5CA911e1', '0x349fD87eAf9FBA5d24e16bbB1d211B9203157A63', '000000000000000000000000349fd87eaf9fba5d24e16bbb1d211b9203157a6300000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000020');
 			//	break;
 			case "3":
-				setup('0xfF4732756c856457F08dD534d1EE82498f4C4936', '0x4C3e62f83DdE3bC644659ecD73DCFeFa658DBfA2', '0xCD45A142d109BBC8b22Ff6028614027D1dB4E32F', '0000000000000000000000004C3e62f83DdE3bC644659ecD73DCFeFa658DBfA200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000020');
+				setup('0xB6C1f7DFF2984b30c5E4a03bbb4639dCF127b78B', '0x38c567D307C8810beC53F90C89C92afb1904c32E', '0xCD45A142d109BBC8b22Ff6028614027D1dB4E32F', '00000000000000000000000038c567D307C8810beC53F90C89C92afb1904c32E00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000020');
 				break;																																																																							   											
 			default:																																																																							   										
 				alert('Switch to Ropsten to play Slots!');
@@ -197,7 +197,7 @@ function calcWin() {
     }
 	
 	if(multiplier != 0) {
-		el('#result').innerHTML = "WIN: " + ((multiplier * 10) * (getSelectedAmount() * 10) / (100)) + " ETH!";
+		el('#result').innerHTML = "WIN: " + ((multiplier * 10) * (getSelectedAmount() * 10) / (100)) + " P3X!";
 	} else {
 		el('#result').innerHTML = "";
 	}
@@ -212,24 +212,24 @@ function calcWin() {
 
 async function populateField() {
 	const accounts = await promisify(cb => web3.eth.getAccounts(cb));
-	const playerBalance = await promisify(cb => web3.eth.getBalance(accounts[0], cb));
+	const playerBalance = await promisify(cb => p3xInstance.myBalance(cb));
 	
-	el('#playerWallet').innerHTML = web3.fromWei(playerBalance).toFixed(4) + ' ETH';
+	el('#playerWallet').innerHTML = web3.fromWei(playerBalance).toFixed(4) + ' P3X';
 	
 	const player = await promisify(cb => hubInstance.players(accounts[0], cb));
 	
-	el('#playerBank').innerHTML = web3.fromWei(player[0]).toFixed(2) + ' ETH';
+	el('#playerBank').innerHTML = web3.fromWei(player[0]).toFixed(2) + ' P3X';
 	if(player[0] > 0) {
 		el('#withdraw').hidden = false;
 	} else {
 		el('#withdraw').hidden = true;
 	}
 	
-	el('#contribution').innerHTML = web3.fromWei(player[1]).toFixed(2) + ' ETH';
+	el('#contribution').innerHTML = web3.fromWei(player[1]).toFixed(2) + ' P3X';
 	
 	const totalFundingBalances = await promisify(cb => hubInstance.totalFundingBalances(cb));
 	
-	el('#fundedtotal').innerHTML = web3.fromWei(totalFundingBalances).toFixed(2) + ' ETH';
+	el('#fundedtotal').innerHTML = web3.fromWei(totalFundingBalances).toFixed(2) + ' P3X';
 	
 	if(player[1] > 0) {
 		el('#withdrawfundsbutton').hidden= false;
@@ -249,7 +249,7 @@ async function getLatestWins() {
 		} else {
 				el('#w' + i).innerHTML = playerAddress.substring(0, 10);
 		}
-		el('#a' + i).innerHTML = web3.fromWei(theEvent.amount).toFixed(2) + ' ETH';
+		el('#a' + i).innerHTML = web3.fromWei(theEvent.amount).toFixed(2) + ' P3X';
 		
 		el('#w' + i + 'r1').className = "payoutInner slot" + theEvent.reel1 + "_s";
 		el('#w' + i + 'r2').className = "payoutInner slot" + theEvent.reel2 + "_s";
