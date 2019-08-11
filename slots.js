@@ -153,6 +153,11 @@ function withdraw() {
 	})
 }
 
+function withdrawDividends() {
+	hubInstance.withdrawDividends(function(error, result){
+	})
+}
+
 function withdrawFunds() {
 	hubInstance.withdrawFundingBalancePartial(web3.toWei(el('#fund').value, 'ether'), function(error, result){
 	})
@@ -247,11 +252,11 @@ async function populateField() {
 	
 	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(2) + ' ETH';
 	
-	/* if(player[1] > 0) {
+	if(player[1] > 0) {
 		el('#withdrawdividendsbutton').hidden= false;
 	} else {
 		el('#withdrawdividendsbutton').hidden= true;
-	} */
+	}
 }
 
 async function getLatestWins() {
