@@ -248,7 +248,7 @@ async function populateField() {
 	
 	const shareholder = await promisify(cb => hubInstance.shareholders(accounts[0], cb));
 	
-	el('#mytokens').innerHTML = web3.fromWei(shareholder[0]).toFixed(2) + ' P3X';
+	el('#mytokens').innerHTML = web3.fromWei(shareholder[0]).toFixed(2);
 	
 	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(2) + ' ETH';
 	
