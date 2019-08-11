@@ -168,7 +168,7 @@ function validate() {
 }
 
 function fund() {
-	hubInstance.fund({value:web3.toWei(el('#fund').value, 'ether')}, function(error, result){
+	p3xInstance.transfer(address, web3.toWei(el('#fund').value, 'ether'), '0x00', function(error, result){
 	})
 }
 
