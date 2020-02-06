@@ -104,18 +104,27 @@ function playBank() {
 }
 
 function onTxSent(result) {
-	el('#result').innerHTML  = "Waiting for transaction ...";
 	txHash = result;
 	index = 0;
-	el('#play').hidden = true;
+	el('#play').disabled = true;
+	el('#play').innerHTML = 'Waiting for transaction ...';
+	el('#result').innerHTML = '';
+	el('#totalresult').innerHTML = '';
 	el('#validate').hidden = true;
+	el('#validate').disabled = false;
+	el('#validate').innerHTML = 'Validate';
+	
+	el('#dotfive').disabled = true;
+	el('#one').disabled = true;
+	el('#games').disabled = true;
+	el('#vaultSwitch').disabled = true;
 }
 
 async function isMined() {
 	const txInfo = await promisify(cb => web3.eth.getTransaction(txHash, cb));
 	if (txInfo != null && txInfo.blockNumber != null) {
 		const blockNumber = await promisify(cb => web3.eth.getBlockNumber(cb));
-		el('#result').innerHTML  = "Waiting for next block ...";
+		el('#play').innerHTML  = "Waiting for next block ...";
 		if(blockNumber > txInfo.blockNumber) {
 			finished = false;
 			txHash = null;
@@ -129,6 +138,7 @@ async function isMined() {
 async function spin() {
 	el('#spin').disabled = true;
 	if(index == 0) {
+		totalWin = 0;
 		finished = false;
 		const spin = await promisify(cb => slotsInstance.mySpin(cb));
 		numberOfBets = spin[0];
@@ -137,8 +147,6 @@ async function spin() {
 		reel3 = spin[3];
 	}
 
-	el('#result').innerHTML  = "";
-	
 	result1 = reel1[index].toNumber();
 	result2 = reel2[index].toNumber();
 	result3 = reel3[index].toNumber();
@@ -158,22 +166,13 @@ function withdrawDividends() {
 	})
 }
 
-function withdrawFunds() {
-	hubInstance.withdrawFundingBalancePartial(web3.toWei(el('#fund').value, 'ether'), function(error, result){
-	})
-}
-
 function validate() {
 	slotsInstance.resolveSpin(function(error, result){
 		if(!error) {
-			el('#validate').hidden = true;
-			el('#result').innerHTML  = "Validating...";
+			el('#play').hidden = true;
+			el('#validate').disabled = true;
+			el('#validate').innerHTML  = "Validating...";
 		}
-	})
-}
-
-function fund() {
-	p3xInstance.transfer(address, web3.toWei(el('#fund').value, 'ether'), '', function(error, result){
 	})
 }
 
@@ -189,6 +188,7 @@ function getBytes() {
 	return bytes + (el('#one').checked ? bytesOne : bytesDotFive);
 }
 
+let totalWin;
 function calcWin() {
 	let multiplier = 0;
 	if(result1 + result2 + result3 == 0) {
@@ -202,16 +202,25 @@ function calcWin() {
     }
 	
 	if(multiplier != 0) {
-		el('#result').innerHTML = "WIN: " + ((multiplier * 10) * (getSelectedAmount() * 10) / (100)) + " P3X!";
+		let winnings = ((multiplier * 10) * (getSelectedAmount() * 10) / (100));
+		totalWin += winnings;
+		el('#result').innerHTML = "WIN: " + winnings + " P3X";
 	} else {
-		el('#result').innerHTML = "";
+		el('#result').innerHTML = "WIN: " + getSelectedAmount() + " DIV";
 	}
+	el('#totalresult').innerHTML = "TOTAL: " + totalWin + " P3X";
 	
 	if(index == numberOfBets) {
 		finished = true;
 		el('#play').hidden = false;
+		el('#play').disabled = false;
+		el('#play').innerHTML = 'P L A Y !';
 		el('#spin').hidden = true;
 		el('#validate').hidden = false;
+		el('#dotfive').disabled = false;
+		el('#one').disabled = false;
+		el('#games').disabled = false;
+		el('#vaultSwitch').disabled = false;
 	}
 }
 
@@ -229,26 +238,14 @@ async function populateField() {
 	} else {
 		el('#withdraw').hidden = true;
 	}
-	
-	el('#contribution').innerHTML = web3.fromWei(player[1]).toFixed(2) + ' P3X';
-	
-	const totalFundingBalances = await promisify(cb => hubInstance.totalFundingBalances(cb));
-	
-	el('#fundedtotal').innerHTML = web3.fromWei(totalFundingBalances).toFixed(2) + ' P3X';
-	
-	if(player[1] > 0) {
-		el('#withdrawfundsbutton').hidden = false;
-	} else {
-		el('#withdrawfundsbutton').hidden = true;
-	}
-	
+
 	const totalTokenBalance = await promisify(cb => hubInstance.totalSupply(cb));
 	
-	el('#tokenstotal').innerHTML = web3.fromWei(totalTokenBalance).toFixed(2);
+	//el('#tokenstotal').innerHTML = web3.fromWei(totalTokenBalance).toFixed(2);
 	
 	const shareholder = await promisify(cb => hubInstance.shareholders(accounts[0], cb));
 	
-	el('#mytokens').innerHTML = web3.fromWei(shareholder[0]).toFixed(2);
+	el('#mytokens').innerHTML = web3.fromWei(shareholder[0]).toFixed(2) + ' DIV';
 	
 	el('#mydividends').innerHTML = web3.fromWei(shareholder[1]).toFixed(4) + ' ETH';
 	
@@ -265,22 +262,12 @@ async function getLatestWins() {
 		const theEvent = events[events.length - 1 - i].args;
 		const playerAddress = theEvent.player;
 		const player = await promisify(cb => hubInstance.players(playerAddress, cb));
-		el('#w' + i).innerHTML = playerAddress.substring(0, 10);
-		el('#a' + i).innerHTML = web3.fromWei(theEvent.amount).toFixed(2) + ' P3X';
+		el('#w' + i).innerHTML = playerAddress.substring(0,6) + '...' + playerAddress.substring(playerAddress.length - 4, playerAddress.length)
+		el('#a' + i).innerHTML = ' won ' + web3.fromWei(theEvent.amount).toFixed(2) + ' P3X';
 		
 		el('#w' + i + 'r1').className = "payoutInner slot" + theEvent.reel1 + "_s";
 		el('#w' + i + 'r2').className = "payoutInner slot" + theEvent.reel2 + "_s";
 		el('#w' + i + 'r3').className = "payoutInner slot" + theEvent.reel3 + "_s";
-	}
-}
-
-function enableFundWithdraw() {
-	if(el('#fund').value > 0) {
-		el('#fundbutton').disabled = false;
-		el('#withdrawfundsbutton').disabled = false;
-	} else {
-		el('#fundbutton').disabled = true;
-		el('#withdrawfundsbutton').disabled = true;
 	}
 }
 
