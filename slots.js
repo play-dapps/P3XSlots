@@ -214,7 +214,7 @@ function calcWin() {
 		finished = true;
 		el('#play').hidden = false;
 		el('#play').disabled = false;
-		el('#play').innerHTML = 'P L A Y !';
+		el('#play').innerHTML = 'P L A Y again!';
 		el('#spin').hidden = true;
 		el('#validate').hidden = false;
 		el('#dotfive').disabled = false;
