@@ -62,7 +62,7 @@
 				</div>
 				<div class="row">
 					<div class="col-12">
-						<a href="http://getp3x.com/?mn=0x1EB2acB92624DA2e601EEb77e2508b32E49012ef" target="_blank" role="button" class="btn btn-info">Buy P3X</a>
+						<a href="https://wonnim.github.io/p3x-exchange/?mn=0x1EB2acB92624DA2e601EEb77e2508b32E49012ef" target="_blank" role="button" class="btn btn-info">Buy P3X</a>
 					</div>
 				</div>
 			</div>
@@ -78,35 +78,35 @@
 				<div class="row">
                     <div class="col-12">
 						<div class="row">
-							<div class="col-12">
-								<button onclick="play()" id="play" type="button" class="btn btn-info btn-lg" style="width:100%;font-size: 30px;" hidden>P L A Y !</button>
+							<div class="col-6" style="padding-top:5px">
+								<h5>Number of Games:</h5>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<button onclick="spin()" id="spin" type="button" class="btn btn-info btn-lg" style="width:100%;font-size: 30px;" hidden>S P I N !</button>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12" style="padding-top:5px">
-								<button id="validate" onclick="validate()" type="button" class="btn btn-info" hidden style="width:100%">Validate</button>
+							<div class="col-6" style="padding-top:5px">
+								<input type="number" oninput="changeCreateButtonText()", name="games" id="games" min="1" max="10" value="10" style="background-color: rgb(14, 66, 103)">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-6" style="padding-top:5px">
-								<h5>Number of Spins:</h5>
-							</div>
-							<div class="col-6" style="padding-top:5px">
-								<input type="number" name="games" id="games" min="1" max="10" value="10" style="background-color: rgb(14, 66, 103)">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-6" style="padding-top:5px">
-								<h5>Spin Wager:</h5>
+								<h5>Game Wager:</h5>
 							</div>
 							<div class="col-6" style="padding-top:5px">
 								<label class="radio-inline"><input type="radio" name="size" id="dotfive">0.5 P3X</label>
 								<label class="radio-inline"><input type="radio" name="size" id="one" checked>1 P3X</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<button onclick="play()" id="play" type="button" class="btn btn-info btn-lg" style="width:100%;font-size: 30px;" hidden>Create 10 Games</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<button onclick="spin()" id="spin" type="button" class="btn btn-info btn-lg" style="width:100%;font-size: 30px;" hidden></button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12" style="padding-top:5px">
+								<button id="validate" onclick="validate()" type="button" class="btn btn-info" hidden style="width:100%">Validate Games</button>
 							</div>
 						</div>
 						<div class="row">
@@ -364,7 +364,7 @@
         </div>
 		<div class="row" style="margin:25px">
 			<div class="col-12">
-				<a href="http://getp3x.com/?mn=0x1EB2acB92624DA2e601EEb77e2508b32E49012ef" target="_blank">Buy P3X</a>
+				<a href="https://wonnim.github.io/p3x-exchange/?mn=0x1EB2acB92624DA2e601EEb77e2508b32E49012ef" target="_blank">Buy P3X</a>
 				- <a href="https://play-dapps.github.io/Sacrific3d/" target="_blank">Play Sacrific3d</a>
 				- <a href="https://play-dapps.github.io/P3XRoll/" target="_blank">Play P3XRoll</a>
 				- <a href="https://etherscan.io/address/0xe1cbd6667fe6ee766aa63d16b55002c2d553bb23#code" target="_blank">Contract Source</a>

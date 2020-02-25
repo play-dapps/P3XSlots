@@ -1,5 +1,6 @@
 window.addEventListener('load', async () => {
     // Modern dapp browsers...
+	
     if (window.ethereum) {
         window.web3 = new Web3(ethereum);
 		web3.reset();
@@ -48,9 +49,10 @@ let bytesOne = '0000000000000000000000000000000000000000000000000de0b6b3a7640000
 let bytesDotFive = '00000000000000000000000000000000000000000000000006f05b59d3b20000';
 
 let txHash;
+let txInfo;
 
-let numberOfBets;
 let finished;
+let numberOfBets;
 let index = 0;
 let reel1;
 let reel2;
@@ -67,19 +69,30 @@ function gameLoop() {
 
 async function checkButtons() {
 	if(txHash != null) {
-		const mined = await isMined(txHash);
-		if(!mined) {
+		txInfo = await isMined(txHash);
+		if(txInfo == null) {
 			return;
 		}
 	}
 	
 	const hasActiveSpin = await promisify(cb => slotsInstance.hasActiveSpin(cb));
-	if(hasActiveSpin && !finished) {
-		el('#play').hidden = true;
-		el('#spin').hidden = false;
+	if(hasActiveSpin) {
+		if(!finished) {
+			const spin = await promisify(cb => slotsInstance.mySpin(cb));
+			if(index == 0 && spin[1][0].toNumber() != 42) {
+				console.log(spin[1][0].toNumber());
+				console.log(spin[2][0].toNumber());
+				console.log(spin[3][0].toNumber());
+				numberOfBets = spin[0];
+				el('#spin').innerHTML = 'Play Game 1/' + numberOfBets;
+				el('#play').hidden = true;
+				el('#spin').hidden = false;
+			}
+		}
 	} else {
 		el('#play').hidden = false;
 		el('#spin').hidden = true;
+		el('#validate').hidden = true;
 	}
 }
 
@@ -104,15 +117,16 @@ function playBank() {
 }
 
 function onTxSent(result) {
+	finished = false;
 	txHash = result;
 	index = 0;
 	el('#play').disabled = true;
-	el('#play').innerHTML = 'Waiting for transaction ...';
+	el('#play').innerHTML = "Creating " + el('#games').value + " Games...";
 	el('#result').innerHTML = '';
 	el('#totalresult').innerHTML = '';
 	el('#validate').hidden = true;
 	el('#validate').disabled = false;
-	el('#validate').innerHTML = 'Validate';
+	el('#validate').innerHTML = 'Validate Games';
 	
 	el('#dotfive').disabled = true;
 	el('#one').disabled = true;
@@ -121,25 +135,18 @@ function onTxSent(result) {
 }
 
 async function isMined() {
-	const txInfo = await promisify(cb => web3.eth.getTransaction(txHash, cb));
+	txInfo = await promisify(cb => web3.eth.getTransaction(txHash, cb));
 	if (txInfo != null && txInfo.blockNumber != null) {
-		const blockNumber = await promisify(cb => web3.eth.getBlockNumber(cb));
-		el('#play').innerHTML  = "Waiting for next block ...";
-		if(blockNumber > txInfo.blockNumber) {
-			finished = false;
-			txHash = null;
-			el('#result').innerHTML  = "";
-			return true;
-		}
+		txHash = null;
+		return txInfo;
 	} 
-	return false;
+	return null;
 }
 
 async function spin() {
 	el('#spin').disabled = true;
 	if(index == 0) {
 		totalWin = 0;
-		finished = false;
 		const spin = await promisify(cb => slotsInstance.mySpin(cb));
 		numberOfBets = spin[0];
 		reel1 = spin[1];
@@ -166,12 +173,26 @@ function withdrawDividends() {
 	})
 }
 
+function changeCreateButtonText() {
+	if(el('#games').value == undefined) {
+		el('#games').value = 1;
+	}
+	if(el('#games').value > 10) {
+		el('#games').value = 10;
+	}
+	if(el('#games').value < 1) {
+		el('#games').value = 1;
+	}
+	el('#play').innerHTML = "Create " + el('#games').value + " Games";
+}
+
 function validate() {
 	slotsInstance.resolveSpin(function(error, result){
 		if(!error) {
+			txHash = result;
 			el('#play').hidden = true;
 			el('#validate').disabled = true;
-			el('#validate').innerHTML  = "Validating...";
+			el('#validate').innerHTML  = "Validating Games...";
 		}
 	})
 }
@@ -210,11 +231,14 @@ function calcWin() {
 	}
 	el('#totalresult').innerHTML = "TOTAL: " + totalWin + " P3X";
 	
+	
+	el('#spin').innerHTML = 'Play Game ' + (index+1) + '/' + numberOfBets;
+	
 	if(index == numberOfBets) {
 		finished = true;
 		el('#play').hidden = false;
 		el('#play').disabled = false;
-		el('#play').innerHTML = 'P L A Y again!';
+		el('#play').innerHTML = "Create " + el('#games').value + " Games";
 		el('#spin').hidden = true;
 		el('#validate').hidden = false;
 		el('#dotfive').disabled = false;
